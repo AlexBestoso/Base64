@@ -61,14 +61,16 @@ class base64Class{
 		void encodeStoreResult(char conversionBuffer[4]){
 			if(this->outputBuffer == NULL){
                                 this->outputBufferSize = 4;
-                                this->outputBuffer = (char *)malloc(this->outputBufferSize);
+                                this->outputBuffer = (char *)malloc(this->outputBufferSize+1); // +1 for null termination.
                                 for(int j=0; j<this->outputBufferSize; j++)
                                         this->outputBuffer[j] = conversionBuffer[j];
+				this->outputBuffer[this->outputBufferSize] = 0x00; // Null terminate result
                         }else{
                                 this->outputBufferSize += 4;
-                                this->outputBuffer = (char *)realloc(this->outputBuffer, this->outputBufferSize);
+                                this->outputBuffer = (char *)realloc(this->outputBuffer, this->outputBufferSize+1);
                                 for(int j=this->outputBufferSize-4; j<this->outputBufferSize; j++)
                                         this->outputBuffer[j] = conversionBuffer[j%4];
+				this->outputBuffer[this->outputBufferSize] = 0x00; // Null terminate result
                         }
 		}
 
